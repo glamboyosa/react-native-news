@@ -15,3 +15,4 @@ const useResponsiveScreen = () => {
     responsiveWidth,
   };
 };
+export default useResponsiveScreen;
