@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { View } from 'react-native';
+import Home from '../screens/home';
 function AppTabs() {
   const AppTabs = createBottomTabNavigator();
   return (
@@ -18,7 +19,7 @@ function AppTabs() {
         },
       })}
     >
-      <AppTabs.Screen name='Home' component={() => <View>Hi</View>} />
+      <AppTabs.Screen name='Home' component={Home} />
       <AppTabs.Screen
         name='Bookmarks'
         component={() => <View>Bookmark</View>}

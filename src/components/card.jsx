@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     shadowRadius: 2,
     elevation: 2,
+    padding: 2,
   },
   heading: {
     textAlign: 'center',
