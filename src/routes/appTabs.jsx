@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons, AntDesign } from '@expo/vector-icons';
-import { View } from 'react-native';
+import { Ionicons, AntDesign, EvilIcons } from '@expo/vector-icons';
 import Home from '../screens/home';
+import Headlines from '../screens/headlines';
 function AppTabs() {
   const AppTabs = createBottomTabNavigator();
   return (
@@ -13,17 +13,15 @@ function AppTabs() {
           if (route.name === 'Home') {
             return <AntDesign name={'home'} size={size} color={color} />;
           } else if (route.name === 'Bookmarks') {
-            iconName = 'ios-bookmarks-outline';
+            iconName = 'ios-information-circle';
+            return <EvilIcons name={'star'} size={size} color={color} />;
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
       <AppTabs.Screen name='Home' component={Home} />
-      <AppTabs.Screen
-        name='Bookmarks'
-        component={() => <View>Bookmark</View>}
-      />
+      <AppTabs.Screen name='Bookmarks' component={Headlines} />
     </AppTabs.Navigator>
   );
 }

@@ -1,93 +1,175 @@
 import React from 'react';
 import {
   Text,
-  SafeAreaView,
   View,
   Image,
   ScrollView,
   FlatList,
   StyleSheet,
-  Button,
+  StatusBar,
 } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import useResponsiveScreen from '../libs/hooks/useResponsiveScreen';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-
+import { useFonts } from '@use-expo/font';
+import { AppLoading } from 'expo';
 const Home = ({ navigation }) => {
   const { responsiveHeight, responsiveWidth } = useResponsiveScreen();
+  const [fontsLoaded] = useFonts({
+    'NotoSansJP-Regular': require('../../assets/fonts/NotoSansJP-Regular.otf'),
+    'NotoSansJP-Bold': require('../../assets/fonts/NotoSansJP-Bold.otf'),
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView horizontal>
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate('Headlines')}
-        >
-          <View
-            style={
-              (styles.imageParent,
-              { width: responsiveWidth(30), height: responsiveHeight(30) })
-            }
+    <View style={styles.container}>
+      <Text
+        style={{
+          fontFamily: 'NotoSansJP-Bold',
+          ...styles.heading,
+        }}
+      >
+        top stories
+      </Text>
+      <ScrollView horizontal={true}>
+        <View style={styles.galleryFlexParent}>
+          <TouchableWithoutFeedback
+            style={styles.imageParent}
+            onPress={() => navigation.navigate('Headlines')}
           >
-            <Image
-              source={require('../../assets/headlines.jpg')}
-              style={styles.image}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Sports')}>
-          <View
-            style={
-              (styles.imageParent,
-              { width: responsiveWidth(30), height: responsiveHeight(30) })
-            }
+            <Text
+              style={{
+                fontFamily: 'NotoSansJP-Regular',
+                ...styles.cardHeading,
+              }}
+            >
+              Headlines
+            </Text>
+            <View
+              style={{
+                width: responsiveWidth(60),
+                height: responsiveHeight(40),
+              }}
+            >
+              <Image
+                source={require('../../assets/headlines.jpg')}
+                style={styles.image}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            style={styles.imageParent}
+            onPress={() => navigation.navigate('Sports')}
           >
-            <Image
-              source={require('../../assets/sports.jpg')}
-              style={styles.image}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('UK')}>
-          <View
-            style={
-              (styles.imageParent,
-              { width: responsiveWidth(30), height: responsiveHeight(30) })
-            }
+            <Text
+              style={{
+                fontFamily: 'NotoSansJP-Regular',
+                ...styles.cardHeading,
+              }}
+            >
+              Sports
+            </Text>
+            <View
+              style={{
+                width: responsiveWidth(60),
+                height: responsiveHeight(40),
+              }}
+            >
+              <Image
+                source={require('../../assets/sports.jpg')}
+                style={styles.image}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            style={styles.imageParent}
+            onPress={() => navigation.navigate('UK')}
           >
-            <Image
-              source={require('../../assets/UK.jpg')}
-              style={styles.image}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('US')}>
-          <View
-            style={
-              (styles.imageParent,
-              { width: responsiveWidth(30), height: responsiveHeight(30) })
-            }
+            <Text
+              style={{
+                fontFamily: 'NotoSansJP-Regular',
+                ...styles.cardHeading,
+              }}
+            >
+              UK
+            </Text>
+            <View
+              style={{
+                width: responsiveWidth(60),
+                height: responsiveHeight(40),
+              }}
+            >
+              <Image
+                source={require('../../assets/UK.jpg')}
+                style={styles.image}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            style={styles.imageParent}
+            onPress={() => navigation.navigate('US')}
           >
-            <Image
-              source={require('../../assets/US.jpg')}
-              style={styles.image}
-            />
-          </View>
-        </TouchableWithoutFeedback>
+            <Text
+              style={{
+                fontFamily: 'NotoSansJP-Regular',
+                ...styles.cardHeading,
+              }}
+            >
+              US
+            </Text>
+            <View
+              style={{
+                width: responsiveWidth(60),
+                height: responsiveHeight(40),
+              }}
+            >
+              <Image
+                source={require('../../assets/US.jpg')}
+                style={styles.image}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: StatusBar.currentHeight + 10,
+    fontFamily: 'NotoSansJP-Regular',
   },
   imageParent: {
-    borderRadius: 8,
-    marginRight: 5,
+    marginRight: 10,
+    position: 'relative',
   },
   image: {
     flex: 1,
     width: undefined,
     height: undefined,
+    borderRadius: 8,
+  },
+  cardHeading: {
+    color: 'white',
+    zIndex: 300,
+    position: 'absolute',
+    bottom: 12,
+    left: 10,
+    fontSize: 15,
+  },
+  heading: {
+    fontSize: 25,
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+  galleryFlexParent: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 10,
   },
 });
 export default Home;

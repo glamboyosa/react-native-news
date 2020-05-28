@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useWindowDimensions, PixelRatio } from 'react-native';
 const useResponsiveScreen = () => {
   const window = useWindowDimensions();
