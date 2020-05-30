@@ -7,21 +7,31 @@ import {
   FlatList,
   StyleSheet,
   StatusBar,
+  ActivityIndicator,
 } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import useResponsiveScreen from '../libs/hooks/useResponsiveScreen';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from 'expo';
+import useFetch from '../libs/hooks/useFetch';
+import Card from '../components/card';
 const Home = ({ navigation }) => {
   const { responsiveHeight, responsiveWidth } = useResponsiveScreen();
   const [fontsLoaded] = useFonts({
     'NotoSansJP-Regular': require('../../assets/fonts/NotoSansJP-Regular.otf'),
     'NotoSansJP-Bold': require('../../assets/fonts/NotoSansJP-Bold.otf'),
   });
-  if (!fontsLoaded) {
+  const { data, loading, error } = useFetch(
+    '/top-headlines?sources=cnn&apiKey=43003c6359aa4341af71dcda5cc7b0e9'
+  );
+  if (!fontsLoaded || loading) {
     return <AppLoading />;
   }
+
+  console.log(data);
+  console.log(error);
+  console.log(loading);
   return (
     <View style={styles.container}>
       <Text
@@ -132,6 +142,7 @@ const Home = ({ navigation }) => {
           </TouchableWithoutFeedback>
         </View>
       </ScrollView>
+      <Card data={data} />
     </View>
   );
 };

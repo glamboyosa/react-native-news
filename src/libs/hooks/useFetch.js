@@ -36,7 +36,7 @@ const useFetch = (path) => {
       .then((resp) => {
         dispatch({
           type: actionTypes.success,
-          data: resp.data,
+          data: resp.data.articles,
         });
       })
       .catch((err) => {
