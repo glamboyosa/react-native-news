@@ -2,7 +2,7 @@
 
 A React Native news app with offline reading functionality.
 
-![News App screenshot]('./rn.PNG');
+![News App screenshot]('GIF.mp4');
 
 ## Demo
 
