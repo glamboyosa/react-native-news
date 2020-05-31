@@ -1,15 +1,57 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
-
-const Card = ({ data }) => {
-  let count = 0;
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import BookmarkCard from './bookmarkCard';
+const Card = ({ data, addToBookmarks, navigationHandler, home, style }) => {
   return (
     <ScrollView>
-      {data.slice(0, 2).map((el) => (
-        <View style={styles.container}>
-          <Text style={styles.heading}>{el.title}</Text>
-        </View>
-      ))}
+      {home
+        ? data.slice(0, 3).map((el) => (
+            <Swipeable
+              renderLeftActions={BookmarkCard}
+              onSwipeableLeftOpen={() => addToBookmarks(el.title)}
+            >
+              <View style={styles.container}>
+                <Text
+                  onPress={() =>
+                    navigationHandler(
+                      el.title,
+                      el.content,
+                      el.urlToImage,
+                      el.source.name,
+                      el.url,
+                      el.description
+                    )
+                  }
+                  style={{ ...styles.heading, ...style }}
+                >
+                  {el.title}
+                </Text>
+              </View>
+            </Swipeable>
+          ))
+        : data.map((el) => (
+            <Swipeable
+              renderLeftActions={BookmarkCard}
+              onSwipeableLeftOpen={() => addToBookmarks(el.title)}
+            >
+              <View style={styles.container}>
+                <Text
+                  onPress={() =>
+                    navigationHandler(
+                      el.title,
+                      el.content,
+                      el.urlToImage,
+                      el.source.name
+                    )
+                  }
+                  style={styles.heading}
+                >
+                  {el.title}
+                </Text>
+              </View>
+            </Swipeable>
+          ))}
     </ScrollView>
   );
 };
@@ -26,6 +68,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     padding: 10,
     marginBottom: 15,
+    justifyContent: 'center',
   },
   heading: {
     textAlign: 'center',

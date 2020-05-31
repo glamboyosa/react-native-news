@@ -1,4 +1,4 @@
-import React from 'React';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 const BookmarkCard = () => (
   <View style={styles.card}>
@@ -7,11 +7,18 @@ const BookmarkCard = () => (
 );
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     backgroundColor: '#228B22',
-    padding: 2,
+    padding: 10,
+    marginBottom: 15,
+    zIndex: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
-    fontSize: 3.5,
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'center',
   },
 });
 export default BookmarkCard;

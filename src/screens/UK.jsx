@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
-import { View, Text, StatusBar, StyleSheet } from 'react-native';
+import { View, StatusBar, StyleSheet } from 'react-native';
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from 'expo';
 import useFetch from '../libs/hooks/useFetch';
 import Card from '../components/card';
-import { BookmarkContext } from '../libs/providers/bookmarksProvider';
 import Message from '../components/message';
-const Headlines = ({ navigation }) => {
-  const { addToBookmarks } = useContext(BookmarkContext);
+import { BookmarkContext } from '../libs/providers/bookmarksProvider';
+const UK = ({ navigation }) => {
+  const { addToBookmarks, bookmarks } = useContext(BookmarkContext);
   const [fontsLoaded] = useFonts({
     'NotoSansJP-Regular': require('../../assets/fonts/NotoSansJP-Regular.otf'),
     'NotoSansJP-Bold': require('../../assets/fonts/NotoSansJP-Bold.otf'),
   });
   const { data, loading, error, refetch } = useFetch(
-    '/top-headlines?sources=cnn&apiKey=43003c6359aa4341af71dcda5cc7b0e9'
+    '/top-headlines?sources=bbc-news&apiKey=43003c6359aa4341af71dcda5cc7b0e9'
   );
   if (!fontsLoaded || loading) {
     return <AppLoading />;
@@ -39,6 +39,7 @@ const Headlines = ({ navigation }) => {
     <View style={styles.container}>
       <Card
         data={data}
+        style={{ fontFamily: 'NotoSansJP-Regular' }}
         addToBookmarks={addToBookmarksHandler}
         navigationHandler={(title, content, image, source, url, description) =>
           navigation.navigate('Article', {
@@ -46,7 +47,7 @@ const Headlines = ({ navigation }) => {
             content,
             image,
             source,
-            tagLine: '#TopNews',
+            tagLine: '#UKNews',
             url,
             description,
           })
@@ -61,4 +62,4 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight + 10,
   },
 });
-export default Headlines;
+export default UK;

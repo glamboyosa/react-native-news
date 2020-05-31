@@ -13,6 +13,7 @@ const reducer = (state, action) => {
         ...state,
         loading: false,
         data: action.data,
+        error: null,
       };
     case actionTypes.error:
       return {
@@ -46,10 +47,27 @@ const useFetch = (path) => {
         });
       });
   }, []);
+  const refetch = () => {
+    axios
+      .get(path)
+      .then((resp) => {
+        dispatch({
+          type: actionTypes.success,
+          data: resp.data.articles,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: actionTypes.error,
+          error: err.message,
+        });
+      });
+  };
   return {
     loading: state.loading,
     data: state.data,
     error: state.error,
+    refetch,
   };
 };
 export default useFetch;

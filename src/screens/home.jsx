@@ -1,39 +1,51 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Text,
   View,
   Image,
   ScrollView,
-  FlatList,
   StyleSheet,
   StatusBar,
-  ActivityIndicator,
 } from 'react-native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import useResponsiveScreen from '../libs/hooks/useResponsiveScreen';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from 'expo';
 import useFetch from '../libs/hooks/useFetch';
 import Card from '../components/card';
+import { BookmarkContext } from '../libs/providers/bookmarksProvider';
+import Message from '../components/message';
 const Home = ({ navigation }) => {
+  const { addToBookmarks } = useContext(BookmarkContext);
   const { responsiveHeight, responsiveWidth } = useResponsiveScreen();
   const [fontsLoaded] = useFonts({
     'NotoSansJP-Regular': require('../../assets/fonts/NotoSansJP-Regular.otf'),
     'NotoSansJP-Bold': require('../../assets/fonts/NotoSansJP-Bold.otf'),
   });
-  const { data, loading, error } = useFetch(
+  const { data, loading, error, refetch } = useFetch(
     '/top-headlines?sources=cnn&apiKey=43003c6359aa4341af71dcda5cc7b0e9'
   );
   if (!fontsLoaded || loading) {
     return <AppLoading />;
   }
-
-  console.log(data);
-  console.log(error);
-  console.log(loading);
+  if (!!error) {
+    return (
+      <Message
+        onPressHandler={() => refetch()}
+        style={{ fontFamily: 'NotoSansJP-Regular' }}
+      >
+        {error}
+      </Message>
+    );
+  }
+  const addToBookmarksHandler = (title) => {
+    const newsArticle = data.filter((el) => el.title === title);
+    if (newsArticle.length > 0) {
+      addToBookmarks(newsArticle);
+    }
+  };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text
         style={{
           fontFamily: 'NotoSansJP-Bold',
@@ -142,8 +154,24 @@ const Home = ({ navigation }) => {
           </TouchableWithoutFeedback>
         </View>
       </ScrollView>
-      <Card data={data} />
-    </View>
+      <Card
+        data={data}
+        style={{ fontFamily: 'NotoSansJP-Regular' }}
+        addToBookmarks={addToBookmarksHandler}
+        home
+        navigationHandler={(title, content, image, source, url, description) =>
+          navigation.navigate('Article', {
+            title,
+            content,
+            image,
+            source,
+            tagLine: '#TopNews',
+            url,
+            description,
+          })
+        }
+      />
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -173,7 +201,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 25,
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
     marginLeft: 10,
   },
   galleryFlexParent: {
@@ -181,6 +209,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginLeft: 10,
+    marginBottom: 15,
   },
 });
 export default Home;
