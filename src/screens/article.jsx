@@ -11,6 +11,7 @@ import { useFonts } from '@use-expo/font';
 import * as Linking from 'expo-linking';
 import { AppLoading } from 'expo';
 import useResponsiveScreen from '../libs/hooks/useResponsiveScreen';
+import { useNetInfo } from '@react-native-community/netinfo';
 const Article = ({ route }) => {
   const {
     tagLine,
@@ -24,6 +25,7 @@ const Article = ({ route }) => {
   let count = 0;
 
   const { responsiveWidth, responsiveHeight } = useResponsiveScreen();
+  const { isConnected } = useNetInfo();
   const [fontsLoaded] = useFonts({
     'NotoSansJP-Regular': require('../../assets/fonts/NotoSansJP-Regular.otf'),
     'NotoSansJP-Bold': require('../../assets/fonts/NotoSansJP-Bold.otf'),
@@ -41,9 +43,11 @@ const Article = ({ route }) => {
           flex: 1,
         }}
         source={{
-          uri: !!image
-            ? image
-            : 'https://images.unsplash.com/photo-1571292098320-997aa03a5d19?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+          // TODO: Also check if there's no active WiFi connection.
+          uri:
+            !!image || !isConnected
+              ? image
+              : require('../../assets/background.jpg'),
         }}
       />
       <View style={styles.tag}>
