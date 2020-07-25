@@ -11,7 +11,6 @@ const Bookmarks = ({ navigation }) => {
     'NotoSansJP-Regular': require('../../assets/fonts/NotoSansJP-Regular.otf'),
     'NotoSansJP-Bold': require('../../assets/fonts/NotoSansJP-Bold.otf'),
   });
-  console.log(bookmarks);
   if (!fontsLoaded) {
     return <AppLoading />;
   }

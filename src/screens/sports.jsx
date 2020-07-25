@@ -7,7 +7,7 @@ import Card from '../components/card';
 import { BookmarkContext } from '../libs/providers/bookmarksProvider';
 import Message from '../components/message';
 const Sports = ({ navigation }) => {
-  const { addToBookmarks, bookmarks } = useContext(BookmarkContext);
+  const { addToBookmarks } = useContext(BookmarkContext);
   const [fontsLoaded] = useFonts({
     'NotoSansJP-Regular': require('../../assets/fonts/NotoSansJP-Regular.otf'),
     'NotoSansJP-Bold': require('../../assets/fonts/NotoSansJP-Bold.otf'),

@@ -4,7 +4,6 @@ export const BookmarkContext = createContext({
   bookmarks: [],
   addToBookmarks: () => {},
 });
-// TODO: set the bookmarks to async storage inside the setBookmarks handler
 const BookmarkContextProvider = ({ children }) => {
   const [bookmarks, setBookmarks] = useState([]);
   const addToBookmarks = (newBookmark) => {

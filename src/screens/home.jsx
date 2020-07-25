@@ -25,6 +25,28 @@ const Home = ({ navigation }) => {
   const { data, loading, error, refetch } = useFetch(
     '/top-headlines?sources=cnn&apiKey=43003c6359aa4341af71dcda5cc7b0e9'
   );
+  const imageLabels = [
+    {
+      navigateTo: 'Headlines',
+      imgPath: require('../../assets/headlines.jpg'),
+      text: 'Headlines',
+    },
+    {
+      navigateTo: 'Sports',
+      imgPath: require('../../assets/sports.jpg'),
+      text: 'Sports',
+    },
+    {
+      navigateTo: 'UK',
+      imgPath: require('../../assets/UK.jpg'),
+      text: 'UK',
+    },
+    {
+      navigateTo: 'US',
+      imgPath: require('../../assets/US.jpg'),
+      text: 'US',
+    },
+  ];
   if (!fontsLoaded || loading) {
     return <AppLoading />;
   }
@@ -56,102 +78,30 @@ const Home = ({ navigation }) => {
       </Text>
       <ScrollView horizontal={true}>
         <View style={styles.galleryFlexParent}>
-          <TouchableWithoutFeedback
-            style={styles.imageParent}
-            onPress={() => navigation.navigate('Headlines')}
-          >
-            <Text
-              style={{
-                fontFamily: 'NotoSansJP-Regular',
-                ...styles.cardHeading,
-              }}
+          {imageLabels.map((el) => (
+            <TouchableWithoutFeedback
+              key={el.text}
+              style={styles.imageParent}
+              onPress={() => navigation.navigate(el.navigateTo)}
             >
-              Headlines
-            </Text>
-            <View
-              style={{
-                width: responsiveWidth(60),
-                height: responsiveHeight(40),
-              }}
-            >
-              <Image
-                source={require('../../assets/headlines.jpg')}
-                style={styles.image}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            style={styles.imageParent}
-            onPress={() => navigation.navigate('Sports')}
-          >
-            <Text
-              style={{
-                fontFamily: 'NotoSansJP-Regular',
-                ...styles.cardHeading,
-              }}
-            >
-              Sports
-            </Text>
-            <View
-              style={{
-                width: responsiveWidth(60),
-                height: responsiveHeight(40),
-              }}
-            >
-              <Image
-                source={require('../../assets/sports.jpg')}
-                style={styles.image}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            style={styles.imageParent}
-            onPress={() => navigation.navigate('UK')}
-          >
-            <Text
-              style={{
-                fontFamily: 'NotoSansJP-Regular',
-                ...styles.cardHeading,
-              }}
-            >
-              UK
-            </Text>
-            <View
-              style={{
-                width: responsiveWidth(60),
-                height: responsiveHeight(40),
-              }}
-            >
-              <Image
-                source={require('../../assets/UK.jpg')}
-                style={styles.image}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            style={styles.imageParent}
-            onPress={() => navigation.navigate('US')}
-          >
-            <Text
-              style={{
-                fontFamily: 'NotoSansJP-Regular',
-                ...styles.cardHeading,
-              }}
-            >
-              US
-            </Text>
-            <View
-              style={{
-                width: responsiveWidth(60),
-                height: responsiveHeight(40),
-              }}
-            >
-              <Image
-                source={require('../../assets/US.jpg')}
-                style={styles.image}
-              />
-            </View>
-          </TouchableWithoutFeedback>
+              <Text
+                style={{
+                  fontFamily: 'NotoSansJP-Regular',
+                  ...styles.cardHeading,
+                }}
+              >
+                {el.text}
+              </Text>
+              <View
+                style={{
+                  width: responsiveWidth(60),
+                  height: responsiveHeight(40),
+                }}
+              >
+                <Image source={el.imgPath} style={styles.image} />
+              </View>
+            </TouchableWithoutFeedback>
+          ))}
         </View>
       </ScrollView>
       <Card

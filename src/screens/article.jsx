@@ -34,6 +34,7 @@ const Article = ({ route }) => {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
+  console.log(isConnected);
   return (
     <ScrollView style={styles.container}>
       <Image
@@ -43,7 +44,6 @@ const Article = ({ route }) => {
           flex: 1,
         }}
         source={{
-          // TODO: Also check if there's no active WiFi connection.
           uri:
             !!image || !isConnected
               ? image
