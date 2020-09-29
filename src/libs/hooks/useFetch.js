@@ -17,6 +17,7 @@ const reducer = (state, action) => {
       };
     case actionTypes.error:
       return {
+        ...state,
         loading: false,
         error: action.error,
       };
@@ -48,6 +49,9 @@ const useFetch = (path) => {
       });
   }, []);
   const refetch = () => {
+    dispatch({
+      type: actionTypes.loading,
+    });
     axios
       .get(path)
       .then((resp) => {
